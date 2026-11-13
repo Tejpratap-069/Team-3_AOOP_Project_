@@ -1,0 +1,27 @@
+---- Normal lifecycle: DRAFT -> PLACED -> PAID -> SHIPPED -> DELIVERED ----
+  [OK] same product added again merges into one line (quantity 3)
+Lines: [OrderLine[sku=SKU-1, name=Java Book, unitPrice=EUR 499.00, quantity=1], OrderLine[sku=SKU-2, name=Pen, unitPrice=EUR 10.00, quantity=3]]
+Total (calculated from lines): EUR 529.00
+  [OK] total = 499 + 3 x 10 = EUR 529.00
+After place(): PLACED
+After pay():   PAID
+After ship():  SHIPPED, shipment = Shipment[trackingNumber=TRK-123, shippedAt=2026-11-13T06:06:35.923264110Z]
+After deliver(): DELIVERED
+
+---- Wrong operations are rejected ----
+  [OK] rejected placing an empty order -> An order with no lines cannot be placed
+  [OK] rejected shipping before payment -> Cannot ship when the order is in state DRAFT (needs PAID)
+  [OK] rejected delivering before shipping -> Cannot deliver when the order is in state DRAFT (needs SHIPPED)
+  [OK] rejected adding a line after the order is placed -> Cannot add lines when the order is in state PLACED (needs DRAFT)
+  [OK] rejected paying two times -> Cannot pay when the order is in state PAID (needs PLACED)
+  [OK] rejected cancelling a shipped order -> Order in state SHIPPED cannot be cancelled
+  [OK] rejected cancelling a delivered order -> Order in state DELIVERED cannot be cancelled
+  [OK] a paid order can still be cancelled (refund handled separately)
+
+---- Credit limit rule (cross-aggregate) ----
+  [OK] order of EUR 600 placed within credit limit 1000
+Credit reserved now: EUR 600.00, available: EUR 400.00
+  [OK] rejected second order of EUR 600 crosses the credit limit (only 400 left) -> Order total EUR 600.00 is more than the available credit EUR 400.00 of customer Tej
+  [OK] rejected order stays a draft and no credit is reserved
+
+ALL DEMO CHECKS PASSED (13 checks)

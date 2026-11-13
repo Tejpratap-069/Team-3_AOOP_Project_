@@ -1,0 +1,23 @@
+  [OK] rejected invalid email format -> Invalid email address format: not-an-email
+  [OK] rejected invalid email format (no domain) -> Invalid email address format: tej@
+Registered, normalised email: tej@example.com
+  [OK] rejected duplicate email with different capitalisation -> Email already registered: tej@example.com
+  [OK] rejected login before verification -> Login not allowed for account in state PENDING_VERIFICATION
+  [OK] rejected wrong verification token -> Verification token does not match
+  [OK] rejected expired verification token -> Verification token has expired - request a new one
+After verification: status=ACTIVE, verified=true
+  [OK] login allowed after verification
+  [OK] rejected replaying the same token -> Email is already verified
+Normalised phone: +919876543210
+  [OK] rejected phone without country code -> Phone number must be in international format (+<country code><number>): 9876543210
+  [OK] rejected address with blank city -> Postal address field 'city' must not be blank
+  [OK] complete postal address accepted
+  [OK] rejected login while suspended -> Login not allowed for account in state SUSPENDED
+  [OK] login restored after reactivation
+  [OK] rejected double suspend -> Cannot suspend an account in state SUSPENDED (requires ACTIVE)
+After email change: status=PENDING_VERIFICATION, verified=false
+  [OK] rejected login after email change, before re-verification -> Login not allowed for account in state PENDING_VERIFICATION
+  [OK] re-verified new email, login allowed again
+  [OK] rejected login after deletion -> Login not allowed for account in state DELETED
+  [OK] rejected verifying a deleted account -> A deleted account cannot be verified
+ALL DEMO CHECKS PASSED (18 checks)

@@ -1,0 +1,21 @@
+---- Normal use ----
+Java Book x1 = EUR 499.00
+Pen x3 = EUR 29.97
+Cart total: EUR 528.97
+
+---- Discount ----
+Price EUR 9.99 after 15% discount = EUR 8.49
+Price EUR 10.00 after 25% discount = EUR 7.50
+
+---- Other currencies ----
+JPY price (no minor units): JPY 500
+KWD price (3 minor units): KWD 1.250
+
+---- Wrong operations are rejected ----
+negative price -> rejected: Money cannot be negative: -5.00
+too many decimals for JPY -> rejected: Too many decimal places for JPY: 10.5
+adding EUR and USD -> rejected: Currency mismatch: cannot combine EUR with USD
+discount of 250% -> rejected: Percentage must be between 0 and 100: 25000 bp
+discount of -20% -> rejected: Percentage must be between 0 and 100: -2000 bp
+quantity zero -> rejected: Quantity must be at least 1: 0
+quantity negative -> rejected: Quantity must be at least 1: -3
